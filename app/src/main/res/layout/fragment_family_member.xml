@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/familyMember1" />
 
     <EditText
-        android:id="@+id/plainText1"
+        android:id="@+id/fPlainText1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -50,12 +50,12 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="First Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/familyMember2" />
 
     <EditText
-        android:id="@+id/plainText2"
+        android:id="@+id/fPlainText2"
         android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -63,8 +63,19 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="Last Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plainText1" />
+        app:layout_constraintTop_toBottomOf="@+id/fPlainText1" />
+
+    <Button
+        android:id="@+id/fSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fPlainText2" />
 
 </android.support.constraint.ConstraintLayout>
