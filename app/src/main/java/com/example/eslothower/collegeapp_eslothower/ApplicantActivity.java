@@ -1,10 +1,13 @@
 package com.example.eslothower.collegeapp_eslothower;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,14 +18,44 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
 public class ApplicantActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment contentFragment = null;
+    String APP_ID;
+    String API_KEY;
+    private static String MY_EMAIL_ADDRESS;
+    public final static String EMAIL_PREF = "EMAIL_PREF";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        APP_ID = getString(R.string.APP_ID);
+        API_KEY = getString(R.string.API_KEY);
+        Backendless.initApp(this, APP_ID, API_KEY);
+
+        BackendlessUser user = new BackendlessUser();
+        user.setEmail("codingstamps@gmail.com");
+        user.setPassword("password1234");
+        Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
+            @Override
+            public void handleResponse(BackendlessUser response) {
+                Log.i("user", response.getEmail() + "successfully registered");
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.e("Backendless Error", fault.getMessage());
+            }
+        });
+
+
         setContentView(R.layout.activity_applicant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,6 +77,11 @@ public class ApplicantActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        SharedPreferences sharedPreferences =
+                this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EMAIL_PREF, MY_EMAIL_ADDRESS);
+        editor.commit();
     }
 
     @Override
@@ -85,7 +123,7 @@ public class ApplicantActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.family_member) {
-            contentFragment = new FamilyMemberFragment();
+            contentFragment = new FamilyListFragment();
         } else if (id == R.id.profile) {
             contentFragment = new ProfileFragment();
         }
@@ -100,4 +138,14 @@ public class ApplicantActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
+
+
+
+/*
+
+app:layout_constraintLeft_to_LeftOf="parent"
+        app:layout_constraintRight_to_RightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"*/

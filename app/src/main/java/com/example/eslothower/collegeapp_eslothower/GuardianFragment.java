@@ -10,7 +10,7 @@ package com.example.eslothower.collegeapp_eslothower;
         import android.widget.TextView;
 
 
-public class FamilyMemberFragment extends Fragment {
+public class GuardianFragment extends Fragment {
 
     FamilyMember fm = new FamilyMember();
 

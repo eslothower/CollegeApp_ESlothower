@@ -5,6 +5,22 @@ public class Guardian extends FamilyMember{
     String firstName;
     String lastName;
 
+    public Guardian(String firstName) {
+        this.firstName = firstName;
+    }
+
+    String occupation;
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+
+
     public String getFirstName() {
 
         return firstName;
@@ -27,6 +43,11 @@ public class Guardian extends FamilyMember{
 
     public Guardian(){
         super();
+
+    }
+
+    public Guardian(String firstName, String lastName){
+        super(firstName, lastName);
 
     }
 

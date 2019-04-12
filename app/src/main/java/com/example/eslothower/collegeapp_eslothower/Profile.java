@@ -1,8 +1,33 @@
 package com.example.eslothower.collegeapp_eslothower;
 
-public class Profile {
+import java.util.Date;
+
+public class Profile extends ApplicantData {
     String mLastName;
     String mFirstName;
+    Date dateOfBirth;
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+
+
+
+
+
+    /*public Profile() {
+        dateOfBirth = new Date();
+    }*/
+
+
 
     public String getFirstName() {
         return mFirstName;
@@ -25,6 +50,7 @@ public class Profile {
     public Profile(){
         mFirstName = "Alan";
         mLastName = "Turing";
+        dateOfBirth = new Date();
 
     }
 

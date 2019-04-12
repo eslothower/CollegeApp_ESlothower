@@ -1,7 +1,10 @@
 package com.example.eslothower.collegeapp_eslothower;
 
-public class FamilyMember {
+public class FamilyMember extends ApplicantData {
     String mFirstName;
+
+
+
     String mLastName;
 
     public String getFirstName() {
@@ -24,6 +27,10 @@ public class FamilyMember {
         mFirstName = "Ada";
         mLastName = "Lovelace";
 
+    }
+    public FamilyMember(String firstName, String lastName){
+        mFirstName = firstName;
+        mLastName = lastName;
     }
 }
 
