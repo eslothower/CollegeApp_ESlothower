@@ -4,12 +4,12 @@ public class Guardian extends FamilyMember{
 
     String firstName;
     String lastName;
+    String occupation;
 
     public Guardian(String firstName) {
         this.firstName = firstName;
     }
 
-    String occupation;
 
     public String getOccupation() {
         return occupation;
@@ -43,14 +43,25 @@ public class Guardian extends FamilyMember{
 
     public Guardian(){
         super();
+        this.occupation = "unknown";
 
     }
 
     public Guardian(String firstName, String lastName){
         super(firstName, lastName);
+        this.occupation = "unknown";
 
     }
 
+    public Guardian(String firstName, String lastName, String occupation) {
+        super(firstName, lastName);
+        this.occupation = occupation;
+    }
 
+    public String toString(){
+        String result = "Guardian: " + this.getFirstName() + " " + this.getLastName() + "\n\nOccupation: " + this.occupation;
+        return result;
+
+    }
 
 }
