@@ -28,6 +28,10 @@ public class Family {
 
     }
 
+    public void addFamilyMember(){
+
+    }
+
     public ArrayList<FamilyMember> getFamilyList(){
         return family;
     }
