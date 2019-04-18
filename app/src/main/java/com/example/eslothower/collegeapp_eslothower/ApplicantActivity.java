@@ -41,7 +41,7 @@ public class ApplicantActivity extends AppCompatActivity
         Backendless.initApp(this, APP_ID, API_KEY);
 
         BackendlessUser user = new BackendlessUser();
-        user.setEmail("codingstamps@gmail.com");
+        user.setEmail("codingstamp@gmail.com");
         user.setPassword("password1234");
         Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
             @Override
@@ -144,8 +144,4 @@ public class ApplicantActivity extends AppCompatActivity
 
 
 
-/*
 
-app:layout_constraintLeft_to_LeftOf="parent"
-        app:layout_constraintRight_to_RightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"*/

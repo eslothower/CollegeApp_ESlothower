@@ -36,6 +36,7 @@ public class FamilyListFragment extends ListFragment {
         getActivity().setTitle(R.string.family_memeber_title);
         FamilyMemberAdapter adapter = new FamilyMemberAdapter(mFamily.getFamilyList());
         setListAdapter(adapter);
+        setHasOptionsMenu(true);
 
     }
 
@@ -88,13 +89,16 @@ public class FamilyListFragment extends ListFragment {
             case R.id.menu_item_new_guardian:
                 Log.d(TAG, "Selected add new guardian.");
                 Guardian guardian = new Guardian();
-                Family.get().addFamilyMember(guardian);
+                for (FamilyMember f: Family.getFamily().getFamilyList()) {
+                    Log.i(TAG, "Possible match " + guardian + " and" + f);
+                }
+                Family.getFamily().addFamilyMember(guardian);
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.menu_item_new_sibling:
                 Log.d(TAG, "Selected add new sibling.");
                 Sibling sibling = new Sibling();
-                Family.get().addFamilyMember(sibling);
+                Family.getFamily().addFamilyMember(sibling);
                 adapter.notifyDataSetChanged();
                 return true;
             default:
@@ -121,7 +125,7 @@ public class FamilyListFragment extends ListFragment {
 
         switch (item.getItemId()) {
             case R.id.menu_item_delete_family_member:
-                Family.get().deleteFamilyMember(familyMember);
+                Family.getFamily().deleteFamilyMember(familyMember);
                 adapter.notifyDataSetChanged();
                 Backendless.Data.of(FamilyMember.class).remove(familyMember,new
                         AsyncCallback<Long>() {
@@ -135,6 +139,21 @@ public class FamilyListFragment extends ListFragment {
                                 Log.e(TAG, fault.getMessage());
                             }
                         });
+            /*case R.id.menu_item_save_family_member:
+                ArrayList<FamilyMember> familyArray = mFamily.getFamily();
+                for (FamilyMember fm:familyArray){
+                    Backendless.Persistence.save(fm, new AsyncCallback<FamilyMember>() {
+                        @Override
+                        public void handleResponse(FamilyMember familyMember) {
+                            Log.i(TAG, "Saved " + familyMember.toString());
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+                            Log.i(TAG, backendlessFault.toString());
+                        }
+                    });
+                }*/
                 return true;
         }
         return super.onContextItemSelected(item);

@@ -28,8 +28,12 @@ public class Family {
 
     }
 
-    public void addFamilyMember(){
+    public void addFamilyMember(FamilyMember fm){
+        family.add(fm);
+    }
 
+    public void deleteFamilyMember(FamilyMember fm){
+        family.remove(fm);
     }
 
     public ArrayList<FamilyMember> getFamilyList(){

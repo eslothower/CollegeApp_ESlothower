@@ -9,6 +9,7 @@
     <string name="family_memeber">Family Memeber</string>
     <string name="profile">Profile</string>
     <string name="family_memeber_title">FamilyListFragment</string>
+    <string name="family_memebers_title">Applicant\'s Family</string>
     <string name="delete_family_member">Delete Family Member</string>
     <string name="new_guardian">Add Guardian</string>
     <string name="new_sibling">Add Sibling</string>

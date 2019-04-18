@@ -8,11 +8,12 @@ public class Sibling extends FamilyMember {
     String lastName;
 
     public Sibling() {
+
         super();
     }
 
     public String toString(){
-        String result = "Guardian: " + this.getFirstName() + " " + this.getLastName();
+        String result = "Sibling: " + this.getFirstName() + " " + this.getLastName();
         return result;
 
     }

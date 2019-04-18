@@ -3,6 +3,7 @@ package com.example.eslothower.collegeapp_eslothower;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 
 
+import java.io.File;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -217,6 +219,14 @@ public class ProfileFragment extends Fragment {
                 Log.e("Profile Fragment", "Failed to find profile: " + fault.getMessage());
             }
         });
+    }
+
+    public File getPhotoFile() {
+        File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File(externalFilesDir, mProfile.getPhotoFilename());
     }
 
 

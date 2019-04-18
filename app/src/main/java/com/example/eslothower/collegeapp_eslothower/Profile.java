@@ -6,6 +6,12 @@ public class Profile extends ApplicantData {
     String mLastName;
     String mFirstName;
     Date dateOfBirth;
+    private final static String  photoFileName = "IMG_PROFILE.jpg";
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
 
 
 
@@ -19,7 +25,9 @@ public class Profile extends ApplicantData {
 
 
 
-
+    public String getPhotoFilename(){
+        return photoFileName;
+    }
 
 
 
