@@ -1,5 +1,6 @@
 package com.example.eslothower.collegeapp_eslothower;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -85,25 +86,37 @@ public class FamilyListFragment extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FamilyMemberAdapter adapter = (FamilyMemberAdapter)getListAdapter();
-        switch (item.getItemId()) {
+        FamilyMember newFM;
+        /*switch (item.getItemId()) {
             case R.id.menu_item_new_guardian:
-                Log.d(TAG, "Selected add new guardian.");
-                Guardian guardian = new Guardian();
-                for (FamilyMember f: Family.getFamily().getFamilyList()) {
-                    Log.i(TAG, "Possible match " + guardian + " and" + f);
-                }
-                Family.getFamily().addFamilyMember(guardian);
-                adapter.notifyDataSetChanged();
-                return true;
+               newFM = new Guardian();
             case R.id.menu_item_new_sibling:
-                Log.d(TAG, "Selected add new sibling.");
-                Sibling sibling = new Sibling();
-                Family.getFamily().addFamilyMember(sibling);
-                adapter.notifyDataSetChanged();
-                return true;
+              newFM = new Sibling();
             default:
-                return super.onOptionsItemSelected(item);
+                newFM = null;
+        }*/
+
+        if (item.getItemId() == R.id.menu_item_new_guardian){
+            newFM = new Guardian();
+        } else if (item.getItemId() == R.id.menu_item_new_sibling){
+            newFM = new Sibling();
+        } else{
+            newFM = null;
         }
+        try{
+        for (FamilyMember f: Family.getFamily().getFamilyList()){
+             if (newFM.getClass().isInstance(f)){
+                if (f.equals(newFM)) {
+                    Log.i(TAG, "MATCH!!!");
+                    return true;
+                }
+            }
+        }}
+        catch (Exception e){
+            Log.i(TAG, e.getMessage());
+        }
+        Family.getFamily().addFamilyMember(newFM);
+        return true;
     }
 
     @Override
@@ -164,6 +177,17 @@ public class FamilyListFragment extends ListFragment {
         super.onResume();
         FamilyMemberAdapter adapter = (FamilyMemberAdapter) getListAdapter();
         adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        FamilyMember f = ((FamilyMemberAdapter)getListAdapter()).getItem(position);
+        Log.d(TAG, f.toString() + " was clicked." + FamilyMemberActivity.class);
+        Intent i = new Intent(getActivity(), FamilyMemberActivity.class);
+        i.putExtra(FamilyMember.EXTRA_RELATION, f.getClass().getName());
+        i.putExtra(FamilyMember.EXTRA_INDEX, position);
+        startActivity(i);
     }
 
 }
