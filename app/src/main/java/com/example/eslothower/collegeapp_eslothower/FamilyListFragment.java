@@ -74,6 +74,8 @@ public class FamilyListFragment extends ListFragment {
         ListView listView = (ListView)v.findViewById(android.R.id.list);
         registerForContextMenu(listView);
 
+
+
         return v;
     }
 

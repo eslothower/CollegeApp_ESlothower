@@ -58,22 +58,16 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (pfEditText.getText().toString()!=null){
                     mProfile.mFirstName = pfEditText.getText().toString();
+                    pFirstName.setText(pfEditText.getText());
                 }
                 if (plEditText.getText().toString()!=null){
                     mProfile.mLastName = plEditText.getText().toString();
+                    pLastName.setText(plEditText.getText());
                 }
                 saveToBackendless();
             }
         });
 
-
-        pSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pFirstName.setText(pfEditText.getText());
-                pLastName.setText(plEditText.getText());
-            }
-        });
 
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +85,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-
+/*
         if (email == null){
             SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
             String email = sharedPreferences.getString(ApplicantActivity.EMAIL_PREF, null);
@@ -127,7 +121,7 @@ public class ProfileFragment extends Fragment {
             public void handleFault(BackendlessFault fault) {
                 Log.i(TAG, "Failed to save profile!" + fault.getMessage());
             }
-        });
+        });*/
     }
 
 
