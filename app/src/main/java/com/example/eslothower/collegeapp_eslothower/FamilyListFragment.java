@@ -100,6 +100,7 @@ public class FamilyListFragment extends ListFragment {
 
         if (item.getItemId() == R.id.menu_item_new_guardian){
             newFM = new Guardian();
+            newFM.setEmail();
         } else if (item.getItemId() == R.id.menu_item_new_sibling){
             newFM = new Sibling();
         } else{
@@ -156,8 +157,8 @@ public class FamilyListFragment extends ListFragment {
                         });
             /*case R.id.menu_item_save_family_member:
                 ArrayList<FamilyMember> familyArray = mFamily.getFamily();
-                for (FamilyMember fm:familyArray){
-                    Backendless.Persistence.save(fm, new AsyncCallback<FamilyMember>() {
+                for (FamilyMember mGuardian:familyArray){
+                    Backendless.Persistence.save(mGuardian, new AsyncCallback<FamilyMember>() {
                         @Override
                         public void handleResponse(FamilyMember familyMember) {
                             Log.i(TAG, "Saved " + familyMember.toString());

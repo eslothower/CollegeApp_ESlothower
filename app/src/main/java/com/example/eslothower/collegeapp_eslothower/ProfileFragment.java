@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
 
 
     Profile mProfile;
-    String email;
+    public String email;
 
 
 
@@ -169,7 +169,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private void saveToBackendless(){
+    public void saveToBackendless(){
         String whereClause = "email = 'jlinburg@doversd.org'";
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setWhereClause(whereClause);

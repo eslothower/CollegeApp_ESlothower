@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 public class SiblingFragment extends Fragment {
 
-    FamilyMember fm = new FamilyMember();
+    Sibling mSibling = new Sibling();
+    private TextView fnTextView;
+    private TextView lnTextView;
+    private EditText fnEditText;
+    private EditText lnEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle bundle){
@@ -19,14 +23,14 @@ public class SiblingFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_sibling, view, false);
 
-        final TextView fnTextView = (TextView)rootView.findViewById(R.id.sibling1);
-        final TextView lnTextView = (TextView)rootView.findViewById(R.id.sibling2);
-        final EditText fnEditText = (EditText)rootView.findViewById(R.id.fPlainText1);
-        final EditText lnEditText = (EditText)rootView.findViewById(R.id.fPlainText2);
+        fnTextView = (TextView)rootView.findViewById(R.id.sibling1);
+        lnTextView = (TextView)rootView.findViewById(R.id.sibling2);
+        fnEditText = (EditText)rootView.findViewById(R.id.fPlainText1);
+        lnEditText = (EditText)rootView.findViewById(R.id.fPlainText2);
         Button mSubmitButton = (Button)rootView.findViewById(R.id.fSubmitButton);
 
-        fnTextView.setText(fm.getFirstName());
-        lnTextView.setText(fm.getLastName());
+        fnTextView.setText(mSibling.getFirstName());
+        lnTextView.setText(mSibling.getLastName());
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,5 +41,18 @@ public class SiblingFragment extends Fragment {
         });
         return rootView;
 
+    }
+
+
+    @Override
+    public void onStart(){
+        int index = getActivity().getIntent().getIntExtra(FamilyMember.EXTRA_INDEX, -1);
+        if (index != -1){
+            mSibling = (Sibling) Family.getFamily().getFamilyList().get(index);
+            fnTextView.setText(mSibling.getFirstName());
+            lnTextView.setText(mSibling.getLastName());
+        }
+
+        super.onStart();
     }
 }

@@ -13,7 +13,7 @@ public class FamilyMemberActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member);
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = null;// = fm.findFragmentById(R.id.fragmentContainer);
+        Fragment fragment = null;// = mGuardian.findFragmentById(R.id.fragmentContainer);
 
         if (fragment == null) {
             if (getIntent().getStringExtra(FamilyMember.EXTRA_RELATION).equals(Guardian.class.getName())) {
@@ -23,7 +23,7 @@ public class FamilyMemberActivity extends FragmentActivity {
                         .commit();
             }
             else if (getIntent().getStringExtra(FamilyMember.EXTRA_RELATION).equals(Sibling.class.getName())) {
-               // fragment = new SiblingFragment();
+                fragment = new SiblingFragment();
                 fm.beginTransaction()
                         .add(R.id.fragmentContainer, fragment)
                         .commit();
