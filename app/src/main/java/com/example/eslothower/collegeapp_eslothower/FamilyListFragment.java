@@ -27,6 +27,7 @@ public class FamilyListFragment extends ListFragment {
 
     Family mFamily;
 
+
     public FamilyListFragment(){
         mFamily = Family.getFamily();
     }
