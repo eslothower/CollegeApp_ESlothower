@@ -2,12 +2,19 @@ package com.example.eslothower.collegeapp_eslothower;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
+import static android.content.ContentValues.TAG;
 
 public class SiblingFragment extends Fragment {
 
@@ -35,8 +42,17 @@ public class SiblingFragment extends Fragment {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fnTextView.setText(fnEditText.getText());
-                lnTextView.setText(lnEditText.getText());
+                Backendless.Persistence.save(mSibling, new AsyncCallback<Sibling>() {
+                    @Override
+                    public void handleResponse(Sibling sibling) {
+                        Log.i(TAG, "Saved" + sibling.toString());
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+                        Log.i(TAG, backendlessFault.toString());
+                    }
+                });
             }
         });
         return rootView;

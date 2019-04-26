@@ -1,6 +1,7 @@
 package com.example.eslothower.collegeapp_eslothower;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -101,7 +102,7 @@ public class FamilyListFragment extends ListFragment {
 
         if (item.getItemId() == R.id.menu_item_new_guardian){
             newFM = new Guardian();
-            newFM.setEmail();
+            newFM.setEmail("codingstamps@gmail.com");
         } else if (item.getItemId() == R.id.menu_item_new_sibling){
             newFM = new Sibling();
         } else{
@@ -192,6 +193,13 @@ public class FamilyListFragment extends ListFragment {
         i.putExtra(FamilyMember.EXTRA_RELATION, f.getClass().getName());
         i.putExtra(FamilyMember.EXTRA_INDEX, position);
         startActivity(i);
+    }
+
+
+    @Override
+    public void onStart(){
+        
+
     }
 
 }
