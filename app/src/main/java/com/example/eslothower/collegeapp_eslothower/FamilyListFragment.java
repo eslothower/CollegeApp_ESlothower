@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FamilyListFragment extends ListFragment {
     private final String TAG = FamilyListFragment.class.getName();
@@ -157,8 +160,8 @@ public class FamilyListFragment extends ListFragment {
                                 Log.e(TAG, fault.getMessage());
                             }
                         });
-            /*case R.id.menu_item_save_family_member:
-                ArrayList<FamilyMember> familyArray = mFamily.getFamily();
+            case R.id.menu_item_save_family_member:
+                ArrayList<FamilyMember> familyArray = mFamily.getFamily().getFamilyList();
                 for (FamilyMember mGuardian:familyArray){
                     Backendless.Persistence.save(mGuardian, new AsyncCallback<FamilyMember>() {
                         @Override
@@ -171,7 +174,11 @@ public class FamilyListFragment extends ListFragment {
                             Log.i(TAG, backendlessFault.toString());
                         }
                     });
-                }*/
+                }
+
+
+
+
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -196,11 +203,52 @@ public class FamilyListFragment extends ListFragment {
     }
 
 
-    @Override
-    public void onStart(){
-        
 
-    }
+    /*@Override
+    public void onStart(){
+        final FamilyMemberAdapter adapter = (FamilyMemberAdapter)getListAdapter();
+        BackendlessDataQuery dq = new BackendlessDataQuery();
+        QueryOptions qo = new QueryOptions();
+        dq.setPageSize(50);
+        dq.setQueryOptions(qo);
+        Backendless.Persistence.of(Guardian.class).find(dq, new AsyncCallback<List<Guardian>>() {
+            @Override
+            public void handleResponse(List<Guardian> familyList) {
+                List<Guardian> resultList = familyList;
+                for (Guardian fm:resultList){
+                    if (!mFamily.getFamily().getFamilyList().contains(fm)) {
+                        mFamily.addFamilyMember(fm);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.i(TAG, backendlessFault.toString());
+            }
+        });
+        Backendless.Persistence.of(Sibling.class).find(dq, new AsyncCallback<List<Sibling>>() {
+            @Override
+            public void handleResponse(List<Sibling> familyList) {
+                List<Sibling> resultList = familyList.getData();
+                for (Sibling fm:resultList){
+                    if (!mFamily.getFamily().getFamilyList().contains(fm)) {
+                        mFamily.addFamilyMember(fm);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Log.i(TAG, backendlessFault.toString());
+            }
+        });
+
+        super.onStart();
+
+    }*/
 
 }
 

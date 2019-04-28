@@ -1,5 +1,9 @@
 package com.example.eslothower.collegeapp_eslothower;
 
+import android.content.Context;
+import android.os.Environment;
+
+import java.io.File;
 import java.util.Date;
 
 public class Profile extends ApplicantData {
@@ -27,6 +31,22 @@ public class Profile extends ApplicantData {
 
     public String getPhotoFilename(){
         return photoFileName;
+    }
+
+    /*public File getPhotoFile() {
+        File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File(externalFilesDir, mProfile.getPhotoFilename());
+    }*/
+
+    public File getPhotoFile(Context context){
+        File externalFilesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File(externalFilesDir, getPhotoFilename());
     }
 
 

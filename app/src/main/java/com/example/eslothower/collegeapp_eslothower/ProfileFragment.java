@@ -1,9 +1,15 @@
 package com.example.eslothower.collegeapp_eslothower;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -12,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -21,6 +29,7 @@ import com.backendless.persistence.DataQueryBuilder;
 
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -30,6 +39,11 @@ public class ProfileFragment extends Fragment {
 
     Profile mProfile;
     public String email;
+
+    public ImageButton mSelfieButton;
+    public ImageView mSelfieView;
+    public File mSelfieFile;
+    private final int REQUEST_SELFIE = 1;
 
 
 
@@ -42,12 +56,33 @@ public class ProfileFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_profile, view, false);
 
+
+
         final TextView pFirstName = (TextView)rootView.findViewById(R.id.pFirstName);
         final TextView pLastName = (TextView)rootView.findViewById(R.id.pLastName);
         final EditText pfEditText = (EditText)rootView.findViewById(R.id.pPlainText1);
         final EditText plEditText = (EditText)rootView.findViewById(R.id.pPlainText2);
         Button pSubmitButton = (Button)rootView.findViewById(R.id.pSubmitButton);
         Button datePickerButton = (Button)rootView.findViewById(R.id.datePickerButton);
+        ImageButton mSelfieButton =  (ImageButton)rootView.findViewById(R.id.profile_camera);
+        ImageView mSelfieView = (ImageView)rootView.findViewById(R.id.profile_pic);
+        mSelfieFile = mProfile.getPhotoFile(getActivity());
+
+        final Intent captureSelfie = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakeSelfie = mSelfieFile != null &&
+                captureSelfie.resolveActivity(getActivity().getPackageManager()) != null;
+        mSelfieButton.setEnabled(canTakeSelfie);
+        if (canTakeSelfie) {
+            Uri uri = Uri.fromFile(mSelfieFile);
+            captureSelfie.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        }
+        mSelfieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(captureSelfie, REQUEST_SELFIE);
+            }
+        });
+
         mProfile = new Profile();
 
         pFirstName.setText(mProfile.getFirstName());
@@ -78,6 +113,7 @@ public class ProfileFragment extends Fragment {
                 Log.i("ProfileFragment", mProfile.dateOfBirth.toString());
             }
         });
+        updateSelfieView();
         return rootView;
 
     }
@@ -213,15 +249,36 @@ public class ProfileFragment extends Fragment {
                 Log.e("Profile Fragment", "Failed to find profile: " + fault.getMessage());
             }
         });
+
+
     }
 
-    public File getPhotoFile() {
-        File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (externalFilesDir == null) {
-            return null;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
         }
-        return new File(externalFilesDir, mProfile.getPhotoFilename());
+
+        if(requestCode == REQUEST_DATE_OF_BIRTH){
+            Date date = (Date)(data.getSerializableExtra(DatePickerFragment.EXTRA_DATE_OF_BIRTH));
+            mProfile.setBirthday(date);
+            mBirthdayButton.setText(formatter.format(mProfile.getBirthday()));
+        }
+        if(requestCode == REQUEST_SELFIE){
+            updateSelfieView();
+        }
     }
+
+    public void updateSelfieView(){
+        if (mSelfieFile!=null && mSelfieFile.exists()){
+            Bitmap bitmap = BitmapFactory.decodeFile(mSelfieFile.getPath());
+            mSelfieView.setImageBitmap(bitmap);
+        }
+    }
+
+
+
+
 
 
 }
