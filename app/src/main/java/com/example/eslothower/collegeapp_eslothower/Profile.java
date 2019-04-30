@@ -42,7 +42,7 @@ public class Profile extends ApplicantData {
     }
 
 
-    //method for retrieving your photo you took
+    //method for retrieving your photo you took in the app
     public File getPhotoFile(Context context){
         File externalFilesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (externalFilesDir == null) {
