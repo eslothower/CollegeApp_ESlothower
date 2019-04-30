@@ -1,7 +1,6 @@
 package com.example.eslothower.collegeapp_eslothower;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -16,15 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class FamilyListFragment extends ListFragment {
     private final String TAG = FamilyListFragment.class.getName();
@@ -36,6 +31,8 @@ public class FamilyListFragment extends ListFragment {
         mFamily = Family.getFamily();
     }
 
+
+    //Set the activitie's title and show the list view of family members
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,11 +43,15 @@ public class FamilyListFragment extends ListFragment {
 
     }
 
+
+    //Adapts the array list
     private class FamilyMemberAdapter extends ArrayAdapter<FamilyMember> {
         public FamilyMemberAdapter(ArrayList<FamilyMember> family) {
             super(getActivity(), 0, family);
         }
 
+
+        //inflates the view and displays the names of the family members in each list in the list view
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
@@ -70,7 +71,7 @@ public class FamilyListFragment extends ListFragment {
         }
     }
 
-
+    //standard onCreate stuff, inflating the view
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
@@ -90,18 +91,13 @@ public class FamilyListFragment extends ListFragment {
         inflater.inflate(R.menu.fragment_family_list, menu);
     }
 
+
+
+    //adds new sibling or guardian to the list according to their respective button. If it's the same to what is already there, then it doesn't add it
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FamilyMemberAdapter adapter = (FamilyMemberAdapter)getListAdapter();
         FamilyMember newFM;
-        /*switch (item.getItemId()) {
-            case R.id.menu_item_new_guardian:
-               newFM = new Guardian();
-            case R.id.menu_item_new_sibling:
-              newFM = new Sibling();
-            default:
-                newFM = null;
-        }*/
 
         if (item.getItemId() == R.id.menu_item_new_guardian){
             newFM = new Guardian();
@@ -109,24 +105,32 @@ public class FamilyListFragment extends ListFragment {
         } else if (item.getItemId() == R.id.menu_item_new_sibling){
             newFM = new Sibling();
         } else{
-            newFM = null;
+            return super.onOptionsItemSelected(item);
+            //newFM = null;
         }
-        try{
-        for (FamilyMember f: Family.getFamily().getFamilyList()){
-             if (newFM.getClass().isInstance(f)){
-                if (f.equals(newFM)) {
-                    Log.i(TAG, "MATCH!!!");
-                    return true;
+            for (FamilyMember f: Family.getFamily().getFamilyList()) {
+                if (newFM.getClass().isInstance(f)) {
+                    if (f.equals(newFM)) {
+                        Log.i(TAG, "MATCH!!!");
+                        return true;
+                    }
                 }
             }
-        }}
-        catch (Exception e){
-            Log.i(TAG, e.getMessage());
-        }
+
+
         Family.getFamily().addFamilyMember(newFM);
+        adapter.notifyDataSetChanged();
         return true;
+
     }
 
+
+
+
+
+
+
+    //standard inflating
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -135,6 +139,8 @@ public class FamilyListFragment extends ListFragment {
                 menu);
     }
 
+
+    //adds or deletes family member depending on what button you hit
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "Context item selected.");
@@ -184,6 +190,8 @@ public class FamilyListFragment extends ListFragment {
         return super.onContextItemSelected(item);
     }
 
+
+    //updates the list of family members when the activity resumes
     @Override
     public void onResume() {
         super.onResume();
@@ -191,7 +199,7 @@ public class FamilyListFragment extends ListFragment {
         adapter.notifyDataSetChanged();
     }
 
-
+    //this brings up a screen showing more detail into each family member, allowing you to modify their information
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         FamilyMember f = ((FamilyMemberAdapter)getListAdapter()).getItem(position);
@@ -204,51 +212,6 @@ public class FamilyListFragment extends ListFragment {
 
 
 
-    /*@Override
-    public void onStart(){
-        final FamilyMemberAdapter adapter = (FamilyMemberAdapter)getListAdapter();
-        BackendlessDataQuery dq = new BackendlessDataQuery();
-        QueryOptions qo = new QueryOptions();
-        dq.setPageSize(50);
-        dq.setQueryOptions(qo);
-        Backendless.Persistence.of(Guardian.class).find(dq, new AsyncCallback<List<Guardian>>() {
-            @Override
-            public void handleResponse(List<Guardian> familyList) {
-                List<Guardian> resultList = familyList;
-                for (Guardian fm:resultList){
-                    if (!mFamily.getFamily().getFamilyList().contains(fm)) {
-                        mFamily.addFamilyMember(fm);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                Log.i(TAG, backendlessFault.toString());
-            }
-        });
-        Backendless.Persistence.of(Sibling.class).find(dq, new AsyncCallback<List<Sibling>>() {
-            @Override
-            public void handleResponse(List<Sibling> familyList) {
-                List<Sibling> resultList = familyList.getData();
-                for (Sibling fm:resultList){
-                    if (!mFamily.getFamily().getFamilyList().contains(fm)) {
-                        mFamily.addFamilyMember(fm);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                Log.i(TAG, backendlessFault.toString());
-            }
-        });
-
-        super.onStart();
-
-    }*/
 
 }
 

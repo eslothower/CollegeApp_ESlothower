@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/sibling2" />
 
     <TextView
         android:id="@+id/textView7"
@@ -32,17 +32,17 @@
     <TextView
         android:id="@+id/sibling2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guardian1" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/fPlainText1"
+        android:id="@+id/fnEditText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -52,10 +52,10 @@
         android:inputType="textPersonName"
         android:text="First Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/occupation" />
+        app:layout_constraintTop_toBottomOf="@+id/sibling1" />
 
     <EditText
-        android:id="@+id/fPlainText2"
+        android:id="@+id/lnEditText"
         android:layout_width="99dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -65,43 +65,18 @@
         android:inputType="textPersonName"
         android:text="Last Name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fPlainText1" />
+        app:layout_constraintTop_toBottomOf="@+id/fnEditText" />
 
     <Button
         android:id="@+id/fSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fPlainText3" />
+        app:layout_constraintTop_toBottomOf="@+id/lnEditText" />
 
-
-    <TextView
-        android:id="@+id/occupation"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guardian2" />
-
-    <EditText
-        android:id="@+id/fPlainText3"
-        android:layout_width="99dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Occupation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fPlainText2" />
 
 </android.support.constraint.ConstraintLayout>

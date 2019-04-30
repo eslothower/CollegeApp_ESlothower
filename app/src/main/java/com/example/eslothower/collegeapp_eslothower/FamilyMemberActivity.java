@@ -10,11 +10,13 @@ public class FamilyMemberActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+        //sets the view to activity_family_member (blank view)
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member);
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = null;// = mGuardian.findFragmentById(R.id.fragmentContainer);
 
+        //moves the data between files
         if (fragment == null) {
             if (getIntent().getStringExtra(FamilyMember.EXTRA_RELATION).equals(Guardian.class.getName())) {
                 fragment = new GuardianFragment();

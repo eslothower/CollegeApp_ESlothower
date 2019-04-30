@@ -9,6 +9,8 @@ public class Family {
     private ArrayList<FamilyMember> family;
     private static Family sFamily;
 
+
+    //adds family members
     private Family(){
         family = new ArrayList<>();
         Guardian mom = new Guardian("Shawn", "Boyer");
@@ -28,18 +30,25 @@ public class Family {
 
     }
 
+
+    //method for adding a family members
     public void addFamilyMember(FamilyMember fm){
         family.add(fm);
     }
 
+
+    //method for deleting family members
     public void deleteFamilyMember(FamilyMember fm){
         family.remove(fm);
     }
 
+
+    //array list of family members
     public ArrayList<FamilyMember> getFamilyList(){
         return family;
     }
 
+    //sets family members to the array list
     public void setFamily(ArrayList<FamilyMember> family){
         this.family = family;
     }

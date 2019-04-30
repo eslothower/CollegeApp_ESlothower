@@ -78,21 +78,31 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="153dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePickerButton">
+
         <ImageView
             android:id="@+id/profile_pic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerInside"
+            android:layout_width="148dp"
+            android:layout_height="106dp"
             android:background="@android:color/darker_gray"
-            android:cropToPadding="true"/>
+            android:cropToPadding="true"
+            android:scaleType="centerInside" />
+
         <ImageButton
             android:id="@+id/profile_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@android:drawable/ic_menu_camera" />
     </LinearLayout>
 
     <Button

@@ -2,13 +2,21 @@ package com.example.eslothower.collegeapp_eslothower;
 
 import android.content.Context;
 import android.os.Environment;
-
 import java.io.File;
 import java.util.Date;
+
+
+
+//A bunch of getters and setters for each piece of information regarding your profile, like name, DOB, etc. Also contructors for your profile.
 
 public class Profile extends ApplicantData {
     String mLastName;
     String mFirstName;
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     Date dateOfBirth;
     private final static String  photoFileName = "IMG_PROFILE.jpg";
 
@@ -33,14 +41,8 @@ public class Profile extends ApplicantData {
         return photoFileName;
     }
 
-    /*public File getPhotoFile() {
-        File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (externalFilesDir == null) {
-            return null;
-        }
-        return new File(externalFilesDir, mProfile.getPhotoFilename());
-    }*/
 
+    //method for retrieving your photo you took
     public File getPhotoFile(Context context){
         File externalFilesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (externalFilesDir == null) {
@@ -48,14 +50,6 @@ public class Profile extends ApplicantData {
         }
         return new File(externalFilesDir, getPhotoFilename());
     }
-
-
-
-    /*public Profile() {
-        dateOfBirth = new Date();
-    }*/
-
-
 
     public String getFirstName() {
         return mFirstName;
@@ -75,6 +69,8 @@ public class Profile extends ApplicantData {
         mLastName = lastName;
     }
 
+
+    //default profile
     public Profile(){
         mFirstName = "Alan";
         mLastName = "Turing";
